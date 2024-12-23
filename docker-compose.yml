@@ -1,0 +1,30 @@
+version: '3'
+services:
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    environment:
+      - DB_HOST=db
+      - DB_USER=root
+      - DB_PASSWORD=password
+      - DB_NAME=url_shortener
+      - REDIS_URL=redis://redis:6379
+      - JWT_SECRET=your_jwt_secret
+      - GOOGLE_CLIENT_ID=your_google_client_id
+      - BASE_URL=http://localhost:3000
+    depends_on:
+      - db
+      - redis
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: url_shortener
+    volumes:
+      - db_data:/var/lib/mysql
+  redis:
+    image: redis:alpine
+volumes:
+  db_data:
+

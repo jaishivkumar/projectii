@@ -1,0 +1,247 @@
+openapi: 3.0.0
+info:
+  title: URL Shortener API
+  version: 1.0.0
+  description: A custom URL shortener API with advanced analytics
+
+paths:
+  /api/auth/google-signin:
+    post:
+      summary: Authenticate user with Google Sign-In
+      tags:
+        - Authentication
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+      responses:
+        '200':
+          description: Successful authentication
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+
+  /api/shorten:
+    post:
+      summary: Create a short URL
+      tags:
+        - URL
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                longUrl:
+                  type: string
+                customAlias:
+                  type: string
+                topic:
+                  type: string
+      responses:
+        '200':
+          description: Short URL created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  shortUrl:
+                    type: string
+                  createdAt:
+                    type: string
+                    format: date-time
+
+  /api/shorten/{alias}:
+    get:
+      summary: Redirect to the original URL
+      tags:
+        - URL
+      parameters:
+        - in: path
+          name: alias
+          required: true
+          schema:
+            type: string
+      responses:
+        '302':
+          description: Redirect to the original URL
+
+  /api/analytics/{alias}:
+    get:
+      summary: Get analytics for a specific short URL
+      tags:
+        - Analytics
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: alias
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Analytics data for the short URL
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  totalClicks:
+                    type: integer
+                  uniqueClicks:
+                    type: integer
+                  clicksByDate:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          type: string
+                          format: date
+                        clicks:
+                          type: integer
+                  osType:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        osName:
+                          type: string
+                        uniqueClicks:
+                          type: integer
+                        uniqueUsers:
+                          type: integer
+                  deviceType:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        deviceName:
+                          type: string
+                        uniqueClicks:
+                          type: integer
+                        uniqueUsers:
+                          type: integer
+
+  /api/analytics/topic/{topic}:
+    get:
+      summary: Get analytics for a specific topic
+      tags:
+        - Analytics
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: topic
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Analytics data for the topic
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  totalClicks:
+                    type: integer
+                  uniqueClicks:
+                    type: integer
+                  clicksByDate:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          type: string
+                          format: date
+                        clicks:
+                          type: integer
+                  urls:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        shortUrl:
+                          type: string
+                        totalClicks:
+                          type: integer
+                        uniqueClicks:
+                          type: integer
+
+  /api/analytics/overall:
+    get:
+      summary: Get overall analytics for the authenticated user
+      tags:
+        - Analytics
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Overall analytics data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  totalUrls:
+                    type: integer
+                  totalClicks:
+                    type: integer
+                  uniqueClicks:
+                    type: integer
+                  clicksByDate:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        date:
+                          type: string
+                          format: date
+                        clicks:
+                          type: integer
+                  osType:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        osName:
+                          type: string
+                        uniqueClicks:
+                          type: integer
+                        uniqueUsers:
+                          type: integer
+                  deviceType:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        deviceName:
+                          type: string
+                        uniqueClicks:
+                          type: integer
+                        uniqueUsers:
+                          type: integer
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
