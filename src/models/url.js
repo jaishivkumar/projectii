@@ -1,6 +1,7 @@
 const { pool } = require('../config/database');
 const { client } = require('../config/redis');
 
+
 class Url {
   static async create(userId, longUrl, shortUrl, customAlias, topic) {
     const [result] = await pool.query(

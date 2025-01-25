@@ -4,6 +4,7 @@ info:
   version: 1.0.0
   description: A custom URL shortener API with advanced analytics
 
+
 paths:
   /api/auth/google-signin:
     post:

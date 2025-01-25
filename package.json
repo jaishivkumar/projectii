@@ -8,6 +8,7 @@
     "dev": "node src/index.js",
     "test": "jest"
   },
+  
   "author": "",
   "license": "ISC",
   "dependencies": {
