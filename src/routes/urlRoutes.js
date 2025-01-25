@@ -1,5 +1,5 @@
 const express = require('express');
-const { createShortUrl, redirectShortUrl } = require('../controllers/urlController');
+const { createShortUrl, redirectShortUrl } = require('../controller/urlController');
 const { authenticate } = require('../middleware/auth');
 
 const router = express.Router();

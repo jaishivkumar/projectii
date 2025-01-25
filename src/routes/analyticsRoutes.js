@@ -1,5 +1,5 @@
 const express = require('express');
-const { getUrlAnalytics, getTopicAnalytics, getOverallAnalytics } = require('../controllers/analyticsController');
+const { getUrlAnalytics, getTopicAnalytics, getOverallAnalytics } = require('../controller/analyticsController');
 const { authenticate } = require('../middleware/auth');
 
 const router = express.Router();
