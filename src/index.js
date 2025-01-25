@@ -10,6 +10,7 @@ const authRoutes = require('./routes/authRoutes');
 const urlRoutes = require('./routes/urlRoutes');
 const analyticsRoutes = require('./routes/analyticsRoutes');
 
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 

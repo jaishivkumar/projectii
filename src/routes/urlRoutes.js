@@ -7,5 +7,6 @@ const router = express.Router();
 router.post('/shorten', authenticate, createShortUrl);
 router.get('/shorten/:alias', redirectShortUrl);
 
+
 module.exports = router;
 
